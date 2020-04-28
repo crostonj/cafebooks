@@ -15,6 +15,8 @@ var bookController = function(){
   var getByAuthor = function(req, res){
     router.get('/', function(req, res, next) {
 
+      let authorid = req.params.id;
+
       const myCredentials = {
         key: process.env.GOODREADS_KEY,
         secret: process.env.GOODREADS_SECRET
@@ -23,7 +25,7 @@ var bookController = function(){
       const gr = goodreads(myCredentials);
     
       // returns all books by an author given the authorID
-      gr.getBooksByAuthor('175417')
+      gr.getBooksByAuthor(authorid);
       .catch(e=> {
         console.log(e);
       })
