@@ -8,15 +8,13 @@ var bookController = function(){
     //Secure all routes
     if (!req.user) {
         //    res.redirect('/');
+        
     }
     next();
   };
 
   var getByAuthor = function(req, res){
-    router.get('/', function(req, res, next) {
-
-      let authorid = "12354";
-
+      let authorid = req.param('id');
       const myCredentials = {
         key: process.env.GOODREADS_KEY,
         secret: process.env.GOODREADS_SECRET
@@ -37,38 +35,28 @@ var bookController = function(){
             
           res.send(r)
         });
-    });
   }
 
   var get = function(req, res){
-    router.get('/', function(req, res, next) {
-
-      let authorid = req.params.id;
-
-      const myCredentials = {
-        key: process.env.GOODREADS_KEY,
-        secret: process.env.GOODREADS_SECRET
-      };
-       
-      const gr = goodreads(myCredentials);
-    
-      // returns all books by an author given the authorID
-      gr.getBooksByAuthor(authorid)
-      .catch(e=> {
-        console.log(e);
-      })
-      .finally(a => {
-        console.log('finally', a)
-        return 1
-      })
-      .then(r => {
-          
-        res.send(r)
-      });
-    
-    });
-  
-    
+      //let authorid = req.param('id');
+      let authorid = "19979294"  //J.K. Rowling
+      if(authorid){
+        const myCredentials = {
+          key: process.env.GOODREADS_KEY,
+          secret: process.env.GOODREADS_SECRET
+        };
+        
+        const gr = goodreads(myCredentials);      
+        // returns all books by an author given the authorID
+        
+        gr.getBooksByAuthor(authorid)
+        .catch(e=> {
+          console.log(e);
+        })
+        .then(r => {          
+          res.send(r)
+        });    
+      }
   }
 
   return {
