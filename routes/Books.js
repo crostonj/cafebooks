@@ -1,18 +1,16 @@
-const goodreads = require('goodreads-api-node');
-
 var express = require('express');
-var router = express.Router();
+var bookRouter = express.Router();
 
-var router = function (nav) {
-  var bookContoller = require('../controllers/bookController')();
+var router = function () {
+  var bookContoller = require('../Controllers/BookController')();
   bookRouter.use(bookContoller.middleware);
   //Secure all routes
 
   bookRouter.route('/')
-      .get(bookContoller.getIndex);
+      .get(bookContoller.get);
 
-  bookRouter.route('/:name')
-      .get(bookContoller.getById);
+  bookRouter.route('/:id')
+      .get(bookContoller.getByAuthor);
 
   return bookRouter;
 

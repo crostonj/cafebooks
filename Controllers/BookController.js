@@ -15,6 +15,34 @@ var bookController = function(){
   var getByAuthor = function(req, res){
     router.get('/', function(req, res, next) {
 
+      let authorid = "12354";
+
+      const myCredentials = {
+        key: process.env.GOODREADS_KEY,
+        secret: process.env.GOODREADS_SECRET
+      };
+       
+      const gr = goodreads(myCredentials);
+    
+      // returns all books by an author given the authorID
+      gr.getBooksByAuthor(authorid)
+        .catch(e=> {
+          console.log(e);
+        })
+        .finally(a => {
+          console.log('finally', a)
+          return 1
+        })
+        .then(r => {
+            
+          res.send(r)
+        });
+    });
+  }
+
+  var get = function(req, res){
+    router.get('/', function(req, res, next) {
+
       let authorid = req.params.id;
 
       const myCredentials = {
@@ -25,7 +53,7 @@ var bookController = function(){
       const gr = goodreads(myCredentials);
     
       // returns all books by an author given the authorID
-      gr.getBooksByAuthor(authorid);
+      gr.getBooksByAuthor(authorid)
       .catch(e=> {
         console.log(e);
       })
@@ -42,9 +70,11 @@ var bookController = function(){
   
     
   }
-  
+
   return {
-    getByAuthor: getByAuthor
+    getByAuthor: getByAuthor,
+    get: get,
+    middleware: middleware
   }
 }
 
