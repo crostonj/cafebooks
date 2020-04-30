@@ -7,7 +7,7 @@ require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var bookRouter = require('./routes/Books');
+var bookRouter = require('./routes/Books')();
 var app = express();
 
 // view engine setup
